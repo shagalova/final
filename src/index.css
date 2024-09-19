@@ -1,13 +1,75 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"]+label {
+    cursor: pointer;
+    opacity: 0.4;
+  }
+  input[type="checkbox"]:checked+label {
+    opacity: 1;
+  }
+  input[type="checkbox"]+label::before {
+    content: "";
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin: 0 17px 0 0;
+    border: 1px solid black;
+    opacity: 0.4;
+  }
+  input[type="checkbox"]:checked+label::before {
+    content: "";
+    background-image: url("../public/chek.svg");
+    opacity: 1;
+  }
+
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "Ferry", sans-serif;
+  src: url("./fonts/ferry_black.otf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+ 
+body {
+  font-family: "Ferry", "Inter", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.tarifs-card {
+  @apply flex flex-col justify-between min-w-[calc((100%-74px)/3)] mobile:min-w-[335px] min-h-[540px] mobile:min-h-[512px] rounded-[10px] bg-basic-white-DEAFULT shadow-[0px_0px_20px_0px_rgba(0,_0,_0,_0.2)] pb-6  my-[70px] mobile:mt-[40px] mobile:mb-0 font-inter;
+}
+.black-theme {
+  @apply bg-basic-black-DEAFULT text-basic-white-DEAFULT; 
+}
+.orange-theme {
+  @apply bg-second-orange;
+}
+.blue-theme {
+  @apply bg-second-light-blue-DEAFULT;
+}
+.black-border {
+  @apply border-2 border-basic-black-DEAFULT;
+}
+.orange-border {
+  @apply border-2 border-second-orange
+}
+.blue-border {
+  @apply border-2 border-second-light-blue-DEAFULT
 }

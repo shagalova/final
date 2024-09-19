@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { HomePage } from './components/HomePage';
+import { RegisterPage } from './components/RegisterPage';
+import { SearchPage } from './components/SearchPage';
+import { Route, Routes } from 'react-router-dom';
+import { OutputPage } from './components/OutputPage';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { logout, selectTokenDate, selectUser } from './redux/users/userSlice';
+import PrivateRoute from './routes/PrivateRoute';
+
+
+
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  const tokenDate = useAppSelector(selectTokenDate)
+
+useEffect(() => {
+  const now = new Date()
+  if(!!tokenDate && now > new Date(tokenDate)) {
+    
+    dispatch(logout())
+  }
+ 
+},[tokenDate])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/auth' element={<RegisterPage />} />
+
+      <Route element={<PrivateRoute />}>
+        <Route path='/search' element={<SearchPage />} />
+        <Route path='/output' element={<OutputPage />} />
+      </Route>
+      
+     
+     
+    </Routes>
+    
   );
 }
 
