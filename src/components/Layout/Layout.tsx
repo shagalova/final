@@ -35,7 +35,7 @@ const Layout = ({ children }: {children: React.ReactNode}) => {
         <Navbar />
 
         <main>
-        {isMobile && isBurgerOpen === true 
+        {isMobile && isBurgerOpen  
       ? <Burger 
         burgerActive={isBurgerOpen}
         isAuth={isAuth}

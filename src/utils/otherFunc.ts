@@ -72,3 +72,33 @@ export const findImgSrc = (text: string) => {
 	return imgSrc
 }
 
+export async function makeRequest(url:string, method:'GET'|'POST' = 'GET', data:any = null, token:string|null = null) {
+	const headers = {
+	  "Content-Type": "application/json",
+	  "Accept": "application/json",
+	  "Authorization": ""
+	};
+	let body:any;
+	if (token) {
+	  headers["Authorization"] = `Bearer ${token}`;
+	}
+	const options = {
+	  method,
+	  headers,
+	  body,
+	};
+	if (data) {
+	  options.body = JSON.stringify(data);
+	}
+	try {
+	  const response = await fetch(url, options);
+	  if (!response.ok) {
+		throw new Error(`Error: ${response.status}`);
+	  }
+	  return await response.json(); 
+	} catch (error) {
+	  console.error("Request failed", error);
+	  throw error; 
+	}
+  }
+  

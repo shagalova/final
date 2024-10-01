@@ -7,7 +7,7 @@ const AccauntInfo = ({isLoading, count, limit}: IAccauntInfoProps) => {
     
         <div className='flex medium-screen:w-[35%] mobile:w-[35%] justify-between'>
             <div className={`limit-info w-[175px] mobile:w-[132px] h-[63px] mobile:h-[75px] bg-[rgba(217,_217,_217,_0.3)] rounded-[5px] flex flex-col gap-[7px] px-3 mobile:px-2.5 justify-center ${isLoading === true ? "items-center" : "items-end mobile:items-start" }`}>
-                {isLoading === true
+                {isLoading 
                     ? 
                         <Loading styles='w-[24px] [h-24px]' />
                     : 

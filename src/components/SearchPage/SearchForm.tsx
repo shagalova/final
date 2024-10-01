@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/users/userSlice';
 import { clearDocuments, isLoading, isLoadingDoc, isReady, selectDocuments, selectHistogramData, selectId, setDocuments, setHistogramData, setObjectIds } from '../../redux/search/searchSlice';
 import { useNavigate } from 'react-router-dom';
-import { validateInn } from '../../utils/otherFunc';
+import { makeRequest, validateInn } from '../../utils/otherFunc';
 import { IDocData, IDocuments, IObjectIds } from '../../types';
 
 const SearchForm = () => {
@@ -38,6 +38,7 @@ const SearchForm = () => {
       dispatch(clearDocuments());
     },[])
 
+    
     const fetchHistogram = async () => {
       const urlHistogram = `${BASE_PATH}${SEARCH_HISTOGRAMS}`
         
@@ -108,16 +109,18 @@ const SearchForm = () => {
 
         try {
           dispatch(isLoading())
-          let response = await fetch(urlHistogram, {
-              method: "POST",
-              body: JSON.stringify(requestHistogram),
-              headers: {
-                  "Authorization":`Bearer ${isAuth}`,
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-              },
-          });
-          const result = await response.json();
+
+          const result = await makeRequest(urlHistogram, "POST", requestHistogram, isAuth);
+          // let response = await fetch(urlHistogram, {
+          //     method: "POST",
+          //     body: JSON.stringify(requestHistogram),
+          //     headers: {
+          //         "Authorization":`Bearer ${isAuth}`,
+          //         "Content-Type": "application/json",
+          //         "Accept": "application/json",
+          //     },
+          // });
+          // const result = await response.json();
           
           if(!result.data.length) {
             console.log("Информация об организации отсутсвует")
@@ -204,17 +207,18 @@ const SearchForm = () => {
           "similarMode": "none"
         }
       try {
-          let response = await fetch(urlObjectSearch, {
-              method: "POST",
-              body: JSON.stringify(requestObjectSearch),
-              headers: {
-                  "Authorization":`Bearer ${isAuth}`,
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-              },
-          });
+          // let response = await fetch(urlObjectSearch, {
+          //     method: "POST",
+          //     body: JSON.stringify(requestObjectSearch),
+          //     headers: {
+          //         "Authorization":`Bearer ${isAuth}`,
+          //         "Content-Type": "application/json",
+          //         "Accept": "application/json",
+          //     },
+          // });
           
-          const result = await response.json();
+          // const result = await response.json();
+          const result = await makeRequest(urlObjectSearch, "POST", requestObjectSearch, isAuth);
           
           if(!result.items.length) {
             
@@ -244,16 +248,19 @@ const SearchForm = () => {
     
                      "ids": arrIds
          }
-         const response = await fetch(urlDocuments, {
-               method: "POST",
-               body: JSON.stringify(requestDocuments),
-               headers: {
-                   "Authorization":`Bearer ${isAuth}`,
-                   "Content-Type": "application/json",
-                   "Accept": "application/json",
-               },
-             }) 
-             const result: IDocuments[] = await response.json();    
+        //  const response = await fetch(urlDocuments, {
+        //        method: "POST",
+        //        body: JSON.stringify(requestDocuments),
+        //        headers: {
+        //            "Authorization":`Bearer ${isAuth}`,
+        //            "Content-Type": "application/json",
+        //            "Accept": "application/json",
+        //        },
+        //      }) 
+            //  const result: IDocuments[] = await response.json();  
+             
+             const result: IDocuments[] = await makeRequest(urlDocuments, "POST", requestDocuments, isAuth);
+
     
              result.map(item => {
     

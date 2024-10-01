@@ -1,0 +1,52 @@
+ Мария Александровна, Добрый день! Даю обратную связь по Вашей работе:
+Понравилось в работе:
+1)Поиск по карточкам сделан корректно, все работает согласно ТЗ без багов и ошибок, молодец!
+2)https://skrinshoter.ru/sRno7zQvIpx отличное решение с приватными роутами, в данном случае не приходится дублировать логику с проверкой авторизацией и логика легко расширяема, при создании новой страницы, которую могут просматривать авторизованные пользователи. Вы просто можете добавить ее в приватный роут без дополнительной логики.
+3)Хорошее решение использовать функции-селекторы при обращении к стору, тем самым Вы изолируете логику состояния от представления, молодец!
+Есть небольшие замечания и рекомендации:
+1)По ТЗ слайдер должен быть по типу карусель, это не реализовано.
+2)https://skrinshoter.ru/sRnGpy9BLfY обработка ошибок хорошее решение, но использование alert в данном контексте не очень удачное решение, так как alert замораживает страницу, тут можно использовать либо кстомный alert, вот пример
+https://blog.logrocket.com/create-custom-react-alert-message/
+https://mui.com/material-ui/react-alert/
+https://dev.to/tripathics/creating-an-alert-system-with-context-and-hook-in-react-713
+либо можно сделать как в макете и выводить ошибку ниже полей формы.
+3)https://skrinshoter.ru/sRnaA7iAZM7 тут не обязательно использовать сравнение с булевым значением, можно использовать более краткую запись  isAuth && isActive. Также Вы можете упростить логику, вынеся общие стили в одну переменную, а изменяющиеся параметры (например, title и containerStyles) вынести отдельно. Это уменьшит дублирование, вот пример
+const commonStyles = "mx-[30px] mobile:mx-[24px] my-6 mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] rounded-[5px]";
+const authStyles = "bg-[#D2D2D2]";
+const defaultStyles = "bg-second-blue text-basic-white-DEAFULT";
+<Button
+  title={isAuth && isActive ? "Перейти в личный кабинет" : "Подробнее"}
+  containerStyles={`${commonStyles} ${isAuth && isActive ? authStyles : defaultStyles}`}
+/>
+4)https://skrinshoter.ru/sRnMOWY7P3w в запросах дублируется логика c headers, если добавятся новые заголовки, то придется во всем проекте их добавлять, поэтому тут можно сделать универсальную функциюдля запросов, вот пример
+async function makeRequest(url, method = 'GET', data = null, token = null) {
+  const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  const options = {
+    method,
+    headers,
+  };
+  if (data) {
+    options.body = JSON.stringify(data);
+  }
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return await response.json(); 
+  } catch (error) {
+    console.error("Request failed", error);
+    throw error; 
+  }
+}
+const response = await makeRequest(urlHistogram, "POST", requestHistogram);
+Либо использовать библиотеку axios https://axios-http.com/ru/ в данной более гибко можно настроить запросы, ознакомьтесь пожалуйста.
+Вы хорошо справились с проектом, молодец!
+Удачи в дальнейшем обучении)
+В случае возникновения вопросов обращайтесь, пожалуйста, в канал по разделу #react_js_фреймворки.

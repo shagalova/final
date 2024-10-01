@@ -8,7 +8,7 @@ const Burger = ({isAuth, handleAuth, handleAuthBack, burgerActive}: IBurgerProps
   return (
     <>
     
-        <div className={`menu  w-screen h-[398px] ${burgerActive === true ? "block" : "hidden"}`}>
+        <div className={`menu  w-screen h-[398px] ${burgerActive ? "block" : "hidden"}`}>
             <div className="menu__content flex flex-col items-center justify-around w-full h-full font-normal bg-basic-blue-DEAFULT text-basic-white-DEAFULT">
                 <div className="links flex flex-col items-center gap-y-[26px]">
                     <div>
@@ -21,7 +21,7 @@ const Burger = ({isAuth, handleAuth, handleAuthBack, burgerActive}: IBurgerProps
                         <a href='#'>FAQ</a>
                     </div>
                 </div>
-                {!!!isAuth 
+                {!isAuth 
                 ? 
                 <div className="auth flex flex-col items-center gap-5">
                     <div className="opacity-40">Зарегистрироваться</div>

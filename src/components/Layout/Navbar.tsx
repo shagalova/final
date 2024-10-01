@@ -79,7 +79,7 @@ const handleAuthBack = () => {
     <div className={`w-full h-[93px] py-[15px] mobile:py-[9px]  ${isMobile && isBurgerOpen === true ? 'bg-basic-blue-DEAFULT' : 'bg-basic-white-DEAFULT'}`}>
       <div className='max-w-[1440px] mobile:max-w-[375px] px-[60px] mobile:pl-3.5 mobile:pr-[26px] mx-auto  flex items-center justify-between font-inter text-main mobile:text-base/[19.36px] font-normal text-basic-black-DEAFULT'>
         <div className="logo w-[calc(100%/3)] medium-screen:w-[calc(100%/6)]">
-          <img src={isMobile && isBurgerOpen === true ? `${process.env.PUBLIC_URL + "/logo-white.svg"}` : `${process.env.PUBLIC_URL + "/logo-green.svg"}`} alt='logo-scan' className='w-[141px] mobile:w-[111px] h-[93px] object-contain ' />
+          <img src={isMobile && isBurgerOpen ? `${process.env.PUBLIC_URL + "/logo-white.svg"}` : `${process.env.PUBLIC_URL + "/logo-green.svg"}`} alt='logo-scan' className='w-[141px] mobile:w-[111px] h-[93px] object-contain ' />
         </div>
 
       { !isMobile        
@@ -137,7 +137,7 @@ const handleAuthBack = () => {
       : <AccauntInfo isLoading={isLoading} count={count} limit={limit}
       />
       }
-      {isBurgerOpen === true 
+      {isBurgerOpen  
       ? <button className={`burger-btn-close bg-burger-close w-[25px] h-[25px]`} onClick={() => dispatch(isOpen(false))}></button>
       : <button className={`burger-btn bg-burger-menu w-[30px] h-[25px]`} onClick={() => dispatch(isOpen(true))}></button>
       }

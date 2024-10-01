@@ -36,9 +36,13 @@ const TarifsCard = ({ tarif }: TarifsCardProps) => {
     } return headerStyle;
     }
 
+    const commonStyles = "mx-[30px] mobile:mx-[24px] my-6 mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] rounded-[5px]";
+    const authStyles = "bg-[#D2D2D2]";
+    const defaultStyles = "bg-second-blue text-basic-white-DEAFULT";
+
   return (
     
-    <div className={isAuth && isActive === true ? setBorder(mainColor) : "tarifs-card"}>
+    <div className={isAuth && isActive ? setBorder(mainColor) : "tarifs-card"}>
        
         <div className={setBg(mainColor)}>
             <div className="pl-[30px] mobile:pl-[24px] pt-2 flex justify-between">
@@ -54,7 +58,7 @@ const TarifsCard = ({ tarif }: TarifsCardProps) => {
         </div>
         <div className="body relative">
             {
-                isAuth && isActive === true
+                isAuth && isActive 
                 ? <span className='current absolute right-2.5 top-3 font-normal text-main text-basic-white-DEAFULT bg-[#3BA5E0] rounded-[10px] px-3 py-[3px]'>Текущий тариф</span>
                 : null
             }
@@ -79,15 +83,23 @@ const TarifsCard = ({ tarif }: TarifsCardProps) => {
             </div>
             <>
             {
-            isAuth && isActive === true 
-            ? <Button
-            title="Перейти в личный кабинет"
-            containerStyles="mx-[30px] mobile:mx-[24px] my-6  mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] bg-[#D2D2D2] rounded-[5px] "
+            // isAuth && isActive === true 
+            // ? <Button
+            // title="Перейти в личный кабинет"
+            // containerStyles="mx-[30px] mobile:mx-[24px] my-6  mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] bg-[#D2D2D2] rounded-[5px] "
+            // />
+            // : <Button
+            // title="Подробнее"
+            // containerStyles="mx-[30px] mobile:mx-[24px] my-6 mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] bg-second-blue text-basic-white-DEAFULT rounded-[5px] "
+            // />
+
+        
+            
+            <Button
+              title={isAuth && isActive ? "Перейти в личный кабинет" : "Подробнее"}
+              containerStyles={`${commonStyles} ${isAuth && isActive ? authStyles : defaultStyles}`}
             />
-            : <Button
-            title="Подробнее"
-            containerStyles="mx-[30px] mobile:mx-[24px] my-6 mobile:mt-[7px] mobile:mb-0 self-center font-normal w-[calc(100%-60px)] mobile:w-[calc(100%-48px)] h-[59px] bg-second-blue text-basic-white-DEAFULT rounded-[5px] "
-            />
+
             }
             </>
             

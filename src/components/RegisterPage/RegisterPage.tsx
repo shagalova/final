@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { login } from "../../redux/users/userSlice";
 import { BASE_PATH, LOGIN_PATH } from "../../utils/vars";
 import { IUserAccount } from "../../types";
+import { makeRequest } from "../../utils/otherFunc";
 
 function RegisterPage() {
 
@@ -13,6 +14,7 @@ function RegisterPage() {
     const [errorMessagePass, setErrorMessagePass] = useState<boolean>(false)
     const [errorMessageLogin, setErrorMessageLogin] = useState<boolean>(false)
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
+    const [notUserMessage, setNotUserMessage] = useState<boolean>(false)
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -21,25 +23,29 @@ function RegisterPage() {
             const url = `${BASE_PATH}${LOGIN_PATH}`;
             const data = {login: account, password: pass}
             try {
-                const response = await fetch (url, {
-                    method: "POST",
-                    body: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                    },
-                });
-                if(!response.ok) {
-                    throw new Error ("ответ сети был не ок.");
-                }
-                const result: IUserAccount = await response.json();
+                // const response = await fetch (url, {
+                //     method: "POST",
+                //     body: JSON.stringify(data),
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         "Accept": "application/json",
+                //     },
+                // });
+                // if(!response.ok) {
+                //     throw new Error ("ответ сети был не ок.");
+                // }
+                // const result: IUserAccount = await response.json();
+
+                const result: IUserAccount = await makeRequest(url, "POST", data);
+
                 const { accessToken, expire } = result;
                 localStorage.setItem("token", accessToken);
                 dispatch(login({login:account, token: accessToken, date: expire}))
                 navigate("/")
 
             } catch (error) {
-                alert("Пользователь не найден");
+                console.log("Пользователь не найден");
+                setNotUserMessage(true)
             }
         }
     const handleHandle =(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -125,6 +131,10 @@ function RegisterPage() {
                 containerStyles="disabled:opacity-50 mt-2.5 mb-[15px] font-medium w-full h-[59px] bg-second-blue rounded-[5px] text-basic-white-DEAFULT text-[22px]/[26.63px]"
                 handleClick={handleHandle}
           />
+
+                <div className="h-5 w-full text-[#FF5959] text-main text-center ">
+                    {notUserMessage ? <p>Пользователь не найден</p> : null}
+                </div>
                 <a href="#" className="underline decoration-[#5970FF] text-second-blue text-center text-main mb-[30px]">Восстановить пароль</a>
                 <label title="dfs" className="text-[#949494] pb-[15px]">Войти через:</label>
                 <div className="flex gap-x-2.5 ">
